@@ -27,7 +27,7 @@ const UserDataMenu = () => {
                         <img
                             alt="profil"
                             src={UserLogoIcon}
-                            class="mx-auto object-cover rounded-full h-10 w-10 "
+                            className="mx-auto object-cover rounded-full h-10 w-10 "
                         />
                         <p>{localStorage.getItem("user.name")}</p>
                     </Menu.Button>
