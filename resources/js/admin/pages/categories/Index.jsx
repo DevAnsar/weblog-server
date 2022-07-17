@@ -11,9 +11,15 @@ import ErrorAlert from "../../components/partials/ErrorAlert";
 import {
     listCategories,
     setCategoryDefaults,
+    deleteCategory,
 } from "../../store/actions/CategoryActions";
 
-const IndexPage = ({ categoriesData, listCategories, setCategoryDefaults }) => {
+const IndexPage = ({
+    categoriesData,
+    listCategories,
+    setCategoryDefaults,
+    deleteCategory,
+}) => {
     // console.log("categories:", categories);
 
     useEffect(() => {
@@ -39,7 +45,9 @@ const IndexPage = ({ categoriesData, listCategories, setCategoryDefaults }) => {
                             </Link>
                         </div>
                         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                            <SuccessAlert msg={categoriesData.success_message} />
+                            <SuccessAlert
+                                msg={categoriesData.success_message}
+                            />
                             <ErrorAlert msg={categoriesData.error_message} />
                             <table className="min-w-full leading-normal">
                                 <thead>
@@ -73,6 +81,9 @@ const IndexPage = ({ categoriesData, listCategories, setCategoryDefaults }) => {
                                         ? categoriesData.categories.data.map(
                                               (item) => (
                                                   <CategoryTableRow
+                                                      deleteCategory={
+                                                          deleteCategory
+                                                      }
                                                       key={item.id}
                                                       category={item}
                                                   />
@@ -81,7 +92,7 @@ const IndexPage = ({ categoriesData, listCategories, setCategoryDefaults }) => {
                                         : null}
                                 </tbody>
                             </table>
-                            
+
                             <Pagination
                                 data={categoriesData.categories}
                                 onclick={listCategories}
@@ -95,7 +106,14 @@ const IndexPage = ({ categoriesData, listCategories, setCategoryDefaults }) => {
     );
 };
 
-const CategoryTableRow = ({ category }) => {
+const CategoryTableRow = ({ category, deleteCategory }) => {
+    const handleDelete = (e) => {
+        e.preventDefault();
+        if (confirm("Are you sure?")) {
+            deleteCategory(category.id);
+        }
+    };
+
     return (
         <tr>
             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -121,7 +139,11 @@ const CategoryTableRow = ({ category }) => {
                 >
                     <PencilIcon className="w-5 text-slate-500 hover:text-blue-500" />
                 </Link>
-                <a href="#" className="btn btn-danger btn-sm">
+                <a
+                    href="#"
+                    onClick={handleDelete}
+                    className="btn btn-danger btn-sm"
+                >
                     <TrashIcon className="w-5 text-slate-500 hover:text-red-500" />
                 </a>
             </td>
@@ -139,7 +161,14 @@ const mapDispatchToProps = (dispatch) => {
     return {
         listCategories: (page) => dispatch(listCategories(page)),
         setCategoryDefaults: () => dispatch(setCategoryDefaults()),
+        deleteCategory: (id) => dispatch(deleteCategory(id)),
     };
 };
 
+// const mapDispatchToCategoryTableRowProps = (dispatch) => {
+//     return {
+//         deleteCategory : (id) => dispatch(deleteCategory(id))
+//     }
+// }
+// connect(null, mapDispatchToCategoryTableRowProps)(CategoryTableRow);
 export default connect(mapStateToProps, mapDispatchToProps)(IndexPage);

@@ -40,6 +40,17 @@ class CategoryController extends Controller
      */
     public function create(Request $request)
     {
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         if(!$request->user()->is_admin) {
             return response()->json(['message' => 'Unauthorize'], 500);
         }
@@ -51,17 +62,6 @@ class CategoryController extends Controller
         $category->slug = $this->slugify($category->title);
         $category->save();
         return response()->json(['data' => $category, 'message' => 'Created successfully'], 201);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
