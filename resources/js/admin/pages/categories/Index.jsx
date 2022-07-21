@@ -165,10 +165,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-// const mapDispatchToCategoryTableRowProps = (dispatch) => {
-//     return {
-//         deleteCategory : (id) => dispatch(deleteCategory(id))
-//     }
-// }
-// connect(null, mapDispatchToCategoryTableRowProps)(CategoryTableRow);
 export default connect(mapStateToProps, mapDispatchToProps)(IndexPage);
