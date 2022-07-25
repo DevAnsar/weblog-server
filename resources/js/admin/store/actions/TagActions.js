@@ -16,6 +16,7 @@ import {
     CREATE_TAGS,
     CREATE_TAGS_SUCCESS,
     CREATE_TAGS_FAILURE,
+    LIST_ALL_TAGS
 } from "../actionTypes/TagTypes";
 
 import Tag from "../../apis/Tag";
@@ -71,7 +72,7 @@ function listTags(page = 1) {
         // async call
         Tag.listAll().then(response => {
             dispatch({
-                type: TagTypes.LIST_ALL_TAGS,
+                type: LIST_ALL_TAGS,
                 data: response.data.data
             });
         });

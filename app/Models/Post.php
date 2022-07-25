@@ -17,7 +17,7 @@ class Post extends Model
      */
     public function getImageUrlAttribute()
     {
-        return $this->image!=""?url("uploads/" . $this->image):"";
+        return $this->image!=""?url("images/posts/" . $this->image):"";
     }
 
     public function category()

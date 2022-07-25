@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ck-editor{
+   width: 100% !important;
+}
+.ck-editor__editable {
+    min-height: 300px;
+}

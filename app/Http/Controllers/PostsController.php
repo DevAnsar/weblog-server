@@ -79,7 +79,7 @@ class PostsController extends Controller
         if($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time().'-'.uniqid().'.'.$file->getClientOriginalExtension();
-            $file->move(public_path('uploads'), $filename);
+            $file->move(public_path('images/posts'), $filename);
             $post->image = $filename;
         }
         $post->save();
@@ -88,7 +88,10 @@ class PostsController extends Controller
             $post->tags()->sync($request->input('tags'));
         }
         $post = Post::with('tags')->find($post->id);
-        return response()->json(['data' => $post, 'message' => 'Created successfully'], 201);
+        return response()->json([
+            'data' => $post,
+            'message' => 'Created successfully'
+        ], 201);
     }
 
     /**
@@ -123,7 +126,7 @@ class PostsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
         if(!$request->user()->is_admin) {
             return response()->json(['message' => 'Unauthorize'], 500);
@@ -135,7 +138,7 @@ class PostsController extends Controller
             'category_id' => 'required',
             'published' => 'required'
         ];
-        if($post->image == "" || ($post->image != "" && ! File::exists('uploads/' . $post->image))) {
+        if($post->image == "" || ($post->image != "" && !File::exists('images/posts/' . $post->image))) {
             $rules['image'] = 'required';
         }
         $this->validate($request, $rules);
@@ -149,7 +152,7 @@ class PostsController extends Controller
             $this->removeImage($post);
             $file = $request->file('image');
             $filename = time().'-'.uniqid().'.'.$file->getClientOriginalExtension();
-            $file->move(public_path('uploads'), $filename);
+            $file->move(public_path('images/posts'), $filename);
             $post->image = $filename;
         }
         $post->save();

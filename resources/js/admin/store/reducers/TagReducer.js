@@ -13,7 +13,10 @@ import {
     SHOW_TAGS,
     SHOW_TAGS_SUCCESS,
     SHOW_TAGS_FAILURE,
-    LIST_ALL_TAGS
+    LIST_ALL_TAGS,
+    CREATE_TAGS,
+    CREATE_TAGS_SUCCESS,
+    CREATE_TAGS_FAILURE
 } from "../actionTypes/TagTypes";
 
 const initialState = {
@@ -64,6 +67,29 @@ const tagReducer = function (state = initialState, action) {
                 ...state,
                 error_message: action.error,
                 list_spinner: false,
+            };
+
+        case CREATE_TAGS:
+            return {
+                ...state,
+                create_update_spinner: true,
+            };
+        case CREATE_TAGS_SUCCESS:
+            return {
+                ...state,
+                create_update_spinner: false,
+                tag: action.data.data,
+                success_message: action.data.message,
+                error_message: "",
+                validation_errors: null,
+            };
+        case CREATE_TAGS_FAILURE:
+            return {
+                ...state,
+                create_update_spinner: false,
+                error_message: action.error.message,
+                validation_errors: action.error.errors,
+                success_message: "",
             };
 
         case DELETE_TAGS:
