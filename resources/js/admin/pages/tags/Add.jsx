@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import Breadcrumb from "../../components/Breadcrumb";
+import Breadcrumb from "../../components/partials/Breadcrumb";
 import { useNavigate } from "react-router-dom";
 import TagForm from "../../components/Tags/Form";
 

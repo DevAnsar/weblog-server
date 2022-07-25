@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import Breadcrumb from "../../components/Breadcrumb";
+import Breadcrumb from "../../components/partials/Breadcrumb";
 import { Link } from "react-router-dom";
 import { PlusIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
 import Spinner from "../../components/partials/Spinner";

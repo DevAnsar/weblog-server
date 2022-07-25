@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // partials
 import UserForm from "./../../components/Users/Form";
-import Breadcrumb from "../../components/Breadcrumb";
+import Breadcrumb from "../../components/partials/Breadcrumb";
 
 // actions
 import {

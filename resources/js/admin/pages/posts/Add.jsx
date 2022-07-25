@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AddCategoryModal from "../../components/Categories/AddModal";
 import AddTagModal from "../../components/Tags/AddModal";
 import PostForm from "./../../components/Posts/Form";
-import Breadcrumb from "../../components/Breadcrumb";
+import Breadcrumb from "../../components/partials/Breadcrumb";
 
 // actions
 import { listAllCategories } from "../../store/actions/CategoryActions";
