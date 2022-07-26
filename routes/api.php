@@ -8,7 +8,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\IndexController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,7 +20,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::prefix('v1')->group(function () {
+    Route::get('index', [IndexController::class,'index']);
+    Route::get('posts/{slug}', [IndexController::class,'get_post']);
+});
 
 Route::post('login', [LoginController::class,'login'])->name('login');
 Route::post('register', [RegisterController::class,'register'])->name('register');
