@@ -19,6 +19,7 @@
         "laravel-mix": "^6.0.49",
         "lodash": "^4.17.19",
         "postcss": "^8.4.14",
+        "postcss-nesting": "^10.1.10",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "resolve-url-loader": "^5.0.0",
@@ -27,8 +28,9 @@
         "tailwindcss": "^3.1.6"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^34.2.0",
+        "@ckeditor/ckeditor5-build-classic": "^35.0.1",
         "@ckeditor/ckeditor5-react": "^5.0.2",
+        "@ckeditor/ckeditor5-source-editing": "^35.0.1",
         "@headlessui/react": "^1.6.6",
         "@heroicons/react": "^1.0.6",
         "dotenv": "^16.0.1",

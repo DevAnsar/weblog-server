@@ -71,7 +71,11 @@ const EditPage = ({
         }
     };
     const handleCkeditorChange = (editor) => {
-        handleFieldChange("content", editor.getData());
+        if (editor) {
+            handleFieldChange("content", editor.getData());
+        }else{
+            console.log("editor is undefined!",editor);
+        }
     };
 
     const handleFormSubmit = (e) => {
@@ -93,7 +97,7 @@ const EditPage = ({
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col min-h-full">
             <Breadcrumb />
             <div className="container mx-auto px-4 sm:px-8 max-w-6xl">
                 <div className="py-8">
@@ -107,7 +111,7 @@ const EditPage = ({
                                 }
                                 success_message={postsData.success_message}
                                 error_message={postsData.error_message}
-                                handleCkeditorChange={(event, editor) =>
+                                handleCkeditorChange={(editor) =>
                                     handleCkeditorChange(editor)
                                 }
                                 all_categories={all_categories}

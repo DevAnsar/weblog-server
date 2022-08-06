@@ -33,7 +33,7 @@ const EditPage = ({ showTag, setTagDefaults, tagsData, handleTitleChange ,editTa
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col min-h-full">
             <Breadcrumb />
             <div className="container mx-auto px-4 sm:px-8 max-w-md">
                 <div className="py-8">

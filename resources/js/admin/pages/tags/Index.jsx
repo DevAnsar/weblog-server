@@ -21,7 +21,7 @@ const IndexPage = ({ tagsData, listTags, setTagDefaults, deleteTag }) => {
     }, []);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col min-h-full">
             <Breadcrumb />
             <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
                 <div className="py-8">

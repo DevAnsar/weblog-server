@@ -3,7 +3,7 @@ import { UsersIcon ,ClipboardListIcon,ServerIcon ,ArrowDownIcon,TagIcon } from '
 
 const DashboardPage = ()=>{
     return(
-        <div className="mt-6 w-full h-full">
+        <div className="w-full min-h-full lg:px-5">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <DashboardStatusCard title="کاربران" Icon={UsersIcon} link="/users" changes={"10"}  />
                 <DashboardStatusCard title="پست ها" Icon={ClipboardListIcon} link="/posts" changes={"6"} />

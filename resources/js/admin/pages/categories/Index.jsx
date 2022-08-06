@@ -27,7 +27,7 @@ const IndexPage = ({
         listCategories(1);
     }, []);
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col min-h-ful">
             <Breadcrumb />
 
             <div className="container mx-auto px-4 sm:px-8 max-w-3xl">

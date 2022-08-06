@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\IndexController;
 
 Route::prefix('v1')->group(function () {
     Route::get('index', [IndexController::class,'index']);
+    Route::get('posts/data/{id}', [IndexController::class,'get_post_with_id']);
     Route::get('posts/{slug}', [IndexController::class,'get_post']);
 });
 

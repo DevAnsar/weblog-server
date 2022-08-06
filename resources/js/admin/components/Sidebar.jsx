@@ -48,14 +48,7 @@ export const sidebarLinks = [
         title: "کامنت ها",
         Icon: ChatAlt2Icon,
         link: "/comments",
-    },
-
-    {
-        id: "7",
-        title: "صفحه ورود",
-        Icon: KeyIcon,
-        link: "/login",
-    },
+    }
 ];
 
 function Sidebar() {

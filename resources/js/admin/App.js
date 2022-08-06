@@ -34,12 +34,12 @@ function App() {
     const location = useLocation();
     return (
         <Provider store={store}>
-            <div className={`flex h-screen w-full bg-slate-50`}>
+            <div className={`flex min-h-screen w-full bg-slate-50`}>
                 <Header />
                 <Sidebar />
                 <main
-                    className={`w-full min-h-full px-5  mt-20 ${
-                        location.pathname !== "/login" ? "lg:pr-64 lg:pl-4" : ""
+                    className={`w-full px-5  mt-20 relative pt-10 ${
+                        location.pathname !== "/login" ? "lg:pr-60" : ""
                     }`}
                 >
                     <Routes>

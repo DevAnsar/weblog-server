@@ -9,6 +9,9 @@
 </head>
 <body class="antialiased">
     <div id="app"></div>
-<!-- Scripts -->
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/super-build/ckeditor.js"></script>
+<script>
+
+</script>
 </body>
 </html>

@@ -67,7 +67,11 @@ const AddPage = ({
         }
     };
     const handleCkeditorChange = (editor) => {
-        handleFieldChange("content", editor.getData());
+        if (editor) {
+            handleFieldChange("content", editor.getData());
+        }else{
+            console.log("editor is undefined!",editor);
+        }
     };
 
     const handleFormSubmit = (e) => {
@@ -83,11 +87,11 @@ const AddPage = ({
     const handleSave = (e) => {
         e.preventDefault();
         handleFieldChange("published", e.target.name == "publish" ? 1 : 2);
-        setTimeout(() =>submitRef.current.click(), 200);
+        setTimeout(() => submitRef.current.click(), 200);
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col min-h-full">
             <Breadcrumb />
             <div className="container mx-auto px-4 sm:px-8 max-w-6xl">
                 <div className="py-8">
@@ -101,7 +105,7 @@ const AddPage = ({
                                 }
                                 success_message={postsData.success_message}
                                 error_message={postsData.error_message}
-                                handleCkeditorChange={(event, editor) =>
+                                handleCkeditorChange={(editor) =>
                                     handleCkeditorChange(editor)
                                 }
                                 all_categories={all_categories}
