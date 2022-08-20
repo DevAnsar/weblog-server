@@ -3320,7 +3320,7 @@ var CKEDITOR_OPTIONS = {
     shouldNotGroupWhenFull: true
   },
   // Changing the language of the interface requires loading the language file using the <script> tag.
-  language: "en",
+  language: "fa",
   list: {
     properties: {
       styles: true,
@@ -3500,6 +3500,21 @@ var Form = function Form(_ref) {
               }), validation_errors.title != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "help-block",
                 children: validation_errors.title[0]
+              }) : null]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "flex items-center gap-5 mt-5",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                children: "\u0686\u06A9\u06CC\u062F\u0647"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "text",
+                className: "rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent",
+                placeholder: "\u0686\u06A9\u06CC\u062F\u0647 \u0648 \u06AF\u0632\u06CC\u062F\u0647 \u067E\u0633\u062A",
+                onChange: handleFieldChange,
+                value: post.excerpt ? post.excerpt : "",
+                name: "excerpt"
+              }), validation_errors.excerpt != null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "help-block",
+                children: validation_errors.excerpt[0]
               }) : null]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "flex flex-col items-start gap-2 mt-5 w-full",
@@ -7608,6 +7623,7 @@ var initialState = {
     title: "",
     slug: "",
     content: "",
+    excerpt: "",
     image: "",
     published: 1,
     category_id: "",
@@ -7794,7 +7810,7 @@ var postReducer = function postReducer() {
 };
 
 function handleFieldChange(state, action) {
-  if (action.field == "title" || action.field == "content" || action.field == "category_id" || action.field == "published" || action.field == "image") {
+  if (action.field == "title" || action.field == "content" || action.field == "excerpt" || action.field == "category_id" || action.field == "published" || action.field == "image") {
     return _objectSpread(_objectSpread({}, state), {}, {
       post: _objectSpread(_objectSpread({}, state.post), {}, _defineProperty({}, action.field, action.data))
     });

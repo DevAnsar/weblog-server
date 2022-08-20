@@ -21,10 +21,10 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        if(!$request->user()->is_admin) {
+        if (!$request->user()->is_admin) {
             return response()->json(['message' => 'Unauthorize'], 500);
         }
-        $users = User::paginate(10);
+        $users = User::paginate(2);
         return response()->json(['data' => $users], 200);
     }
     /**
@@ -35,7 +35,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$request->user()->is_admin) {
+        if (!$request->user()->is_admin) {
             return response()->json(['message' => 'Unauthorize'], 500);
         }
         $this->validate($request, [
@@ -47,7 +47,7 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        if($request->has('is_admin') && $request->is_admin == 1) {
+        if ($request->has('is_admin') && $request->is_admin == 1) {
             $user->is_admin = 1;
         }
         $user->save();
@@ -61,7 +61,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        if(!request()->user()->is_admin) {
+        if (!request()->user()->is_admin) {
             return response()->json(['message' => 'Unauthorize'], 500);
         }
         $user = User::findOrFail($id);
@@ -76,21 +76,21 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!$request->user()->is_admin) {
+        if (!$request->user()->is_admin) {
             return response()->json(['message' => 'Unauthorize'], 500);
         }
         $user = User::findOrFail($id);
         $this->validate($request, [
-            'name' => 'required|unique:users,name,'.$user->id,
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'password' => ($request->password!=''?'min:6':''),
+            'name' => 'required|unique:users,name,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => ($request->password != '' ? 'min:6' : ''),
         ]);
         $user->name = $request->name;
         $user->email = $request->email;
-        if($request->has('password') && !empty($request->password)) {
+        if ($request->has('password') && !empty($request->password)) {
             $user->password = Hash::make($request->password);
         }
-        if($request->has('is_admin') && $request->is_admin == 1) {
+        if ($request->has('is_admin') && $request->is_admin == 1) {
             $user->is_admin = 1;
         } else {
             $user->is_admin = 0;
@@ -106,7 +106,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        if(!request()->user()->is_admin) {
+        if (!request()->user()->is_admin) {
             return response()->json(['message' => 'Unauthorize'], 500);
         }
         User::find($id)->delete();
@@ -120,5 +120,28 @@ class UsersController extends Controller
     public function profile()
     {
         return response()->json(['data' => auth()->user()]);
+    }
+
+    /**
+     * Update user profile information.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $this->validate($request, [
+            'name' => 'required|unique:users,name,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => ($request->password != '' ? 'min:6' : ''),
+        ]);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->has('password') && !empty($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+        return response()->json(['data' => $user, 'message' => 'Profile updated successfully'], 200);
     }
 }

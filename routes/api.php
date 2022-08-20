@@ -31,7 +31,7 @@ Route::post('register', [RegisterController::class,'register'])->name('register'
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('logout', [LoginController::class,'logout'])->name('logout');
-    Route::get('check-auth', [LoginController::class,'checkAuth'])->name('logout');
+    Route::get('check-auth', [LoginController::class,'checkAuth']);
 });
 
 Route::resource('categories', CategoryController::class);
@@ -39,4 +39,5 @@ Route::resource('posts', PostsController::class);
 Route::resource('tags', TagsController::class);
 Route::resource('comments', CommentsController::class);
 Route::get('profile', [UsersController::class,'profile']);
+Route::post('profile/update', [UsersController::class,'updateProfile']);
 Route::resource('users', UsersController::class);

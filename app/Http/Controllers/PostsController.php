@@ -73,6 +73,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->slug = $this->slugify($post->title);
         $post->content = $request->input('content');
+        $post->excerpt = $request->input('excerpt');
         $post->published = $request->input('published');
         $post->category_id = $request->input('category_id');
         $post->user_id = $request->user()->id;
@@ -145,6 +146,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->slug = $this->slugify($post->title);
         $post->content = $request->input('content');
+        $post->excerpt = $request->input('excerpt');
         $post->published = $request->input('published');
         $post->category_id = $request->input('category_id');
         if($request->hasFile('image')) {

@@ -10,7 +10,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $appends = ["image_url", "date_formatted", "excerpt"];
+    protected $appends = ["image_url", "date_formatted"];
 
     /**
      * return the image url to be displayed on react templates
@@ -53,9 +53,9 @@ class Post extends Model
         return Carbon::parse($this->created_at)->format('F d, Y');
     }
 
-    public function getExcerptAttribute()
-    {
-        return substr(strip_tags($this->content), 0, 100);
-    }
+    // public function getExcerptAttribute()
+    // {
+    //     return substr(strip_tags($this->content), 0, 100);
+    // }
 
 }

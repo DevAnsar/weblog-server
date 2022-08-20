@@ -69,7 +69,7 @@ class LoginController extends Controller
         if ($user && $user->is_admin) {
             return response()->json(['state' => 1]);
         }
-        return response()->json(['state' => 0], 401);
+        return response()->json(['state' => 0]);
     }
 
 }
