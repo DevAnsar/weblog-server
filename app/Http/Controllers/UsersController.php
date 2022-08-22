@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 class UsersController extends Controller
 {
@@ -42,13 +43,22 @@ class UsersController extends Controller
             'name' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'image' => 'nullable',
+            'bio' => 'nullable',
         ]);
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->bio = $request->bio;
         $user->password = Hash::make($request->password);
         if ($request->has('is_admin') && $request->is_admin == 1) {
             $user->is_admin = 1;
+        }
+        if($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time().'-'.uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images/users'), $filename);
+            $user->image = $filename;
         }
         $user->save();
         return response()->json(['data' => $user, 'message' => 'Created successfully'], 201);
@@ -87,6 +97,7 @@ class UsersController extends Controller
         ]);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->bio = $request->bio;
         if ($request->has('password') && !empty($request->password)) {
             $user->password = Hash::make($request->password);
         }
@@ -94,6 +105,14 @@ class UsersController extends Controller
             $user->is_admin = 1;
         } else {
             $user->is_admin = 0;
+        }
+        if($request->hasFile('image')) {
+            // remove image
+            $this->removeImage($user);
+            $file = $request->file('image');
+            $filename = time().'-'.uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images/users'), $filename);
+            $user->image = $filename;
         }
         $user->save();
         return response()->json(['data' => $user, 'message' => 'Updated successfully'], 200);
@@ -135,13 +154,29 @@ class UsersController extends Controller
             'name' => 'required|unique:users,name,' . $user->id,
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => ($request->password != '' ? 'min:6' : ''),
+            'image' => 'nullable'
         ]);
         $user->name = $request->name;
         $user->email = $request->email;
         if ($request->has('password') && !empty($request->password)) {
             $user->password = bcrypt($request->password);
         }
+        if($request->hasFile('image')) {
+            // remove image
+            $this->removeImage($user);
+            $file = $request->file('image');
+            $filename = time().'-'.uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images/users'), $filename);
+            $user->image = $filename;
+        }
         $user->save();
         return response()->json(['data' => $user, 'message' => 'Profile updated successfully'], 200);
+    }
+
+    private function removeImage($user)
+    {
+        if($user->image != "" && ! File::exists(public_path('images/users/' . $user->image))) {
+            @unlink(public_path('images/users/' . $user->image));
+        }
     }
 }

@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $appends = ["image_url"];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,7 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin'
+        'is_admin',
+        'image',
+        'bio'
     ];
 
     /**
@@ -43,6 +47,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * return the image url to be displayed on react templates
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->image != "" ? url("images/users/" . $this->image) : "";
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'user_id');
@@ -52,5 +64,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class, 'user_id');
     }
-
 }

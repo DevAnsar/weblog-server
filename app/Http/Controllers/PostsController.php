@@ -189,8 +189,8 @@ class PostsController extends Controller
 
     private function removeImage($post)
     {
-        if($post->image != "" && ! File::exists('uploads/' . $post->image)) {
-            @unlink(public_path('uploads/' . $post->image));
+        if($post->image != "" && ! File::exists(public_path('images/posts/' . $post->image))) {
+            @unlink(public_path('images/posts/' . $post->image));
         }
     }
 }
