@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
@@ -41,3 +42,4 @@ Route::resource('comments', CommentsController::class);
 Route::get('profile', [UsersController::class,'profile']);
 Route::post('profile/update', [UsersController::class,'updateProfile']);
 Route::resource('users', UsersController::class);
+Route::get('dashboard', [Controller::class,'dashboard']);
