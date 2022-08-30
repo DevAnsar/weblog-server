@@ -9,7 +9,9 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\IndexController;
+use App\Http\Controllers\Api\IndexController as ApiIndexController;
+use App\Http\Controllers\Api\PostController as ApiPostController;
+use App\Http\Controllers\Api\CategoryController as ApiCategoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,9 +24,10 @@ use App\Http\Controllers\Api\IndexController;
 */
 
 Route::prefix('v1')->group(function () {
-    Route::get('index', [IndexController::class,'index']);
-    Route::get('posts/data/{id}', [IndexController::class,'get_post_with_id']);
-    Route::get('posts/{slug}', [IndexController::class,'get_post']);
+    Route::get('index', [ApiIndexController::class,'index']);
+    Route::get('posts/data/{id}', [ApiPostController::class,'get_post_with_id']);
+    Route::get('posts/{slug}', [ApiPostController::class,'get_post']);
+    Route::get('categories', [ApiCategoryController::class,'get_categories']);
 });
 
 Route::post('login', [LoginController::class,'login'])->name('login');
