@@ -28,4 +28,23 @@ class CategoryController extends Controller
             ], 401);
         }
     }
+
+    public function get_category_posts($slug)
+    {
+        try {
+            $category = Category::query()->where('slug',$slug)->first();
+            $posts = $category->posts()->with("user")->get();
+
+
+            return response()->json([
+                "posts" => $posts,
+                "category"=> $category,
+                "message" => "اطلاعات با موفقیت دریافت شد"
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                "message" => $exception->getMessage()
+            ], 401);
+        }
+    }
 }
