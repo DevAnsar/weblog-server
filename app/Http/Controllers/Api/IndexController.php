@@ -40,4 +40,25 @@ class IndexController extends Controller
             ], 401);
         }
     }
+
+    public function search(Request $request)
+    {
+        try {
+            $postsQuery = Post::with('category', 'user', 'tags')
+                ->where('published', 1)
+                ->orderBy('id', 'DESC')
+                ->where('title','LIKE',"%".$request->input('q')."%")
+                ->orWhere('content','LIKE',"%".$request->input('q')."%")
+                ->orWhere('excerpt','LIKE',"%".$request->input('q')."%");
+
+            return response()->json([
+                "posts" => $postsQuery->get(),
+                "message" => "اطلاعات با موفقیت دریافت شد"
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                "message" => $exception->getMessage()
+            ], 401);
+        }
+    }
 }

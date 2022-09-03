@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
     Route::get('posts/{slug}', [ApiPostController::class,'get_post']);
     Route::get('categories', [ApiCategoryController::class,'get_categories']);
     Route::get('categories/{slug}/posts', [ApiCategoryController::class,'get_category_posts']);
+    Route::get('search', [ApiIndexController::class,'search']);
 });
 
 Route::post('login', [LoginController::class,'login'])->name('login');
