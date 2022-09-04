@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\NewslettersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\IndexController as ApiIndexController;
 use App\Http\Controllers\Api\PostController as ApiPostController;
@@ -30,6 +31,7 @@ Route::prefix('v1')->group(function () {
     Route::get('categories', [ApiCategoryController::class,'get_categories']);
     Route::get('categories/{slug}/posts', [ApiCategoryController::class,'get_category_posts']);
     Route::get('search', [ApiIndexController::class,'search']);
+    Route::post('newsletter/addEmail', [ApiIndexController::class,'create_newsletter']);
 });
 
 Route::post('login', [LoginController::class,'login'])->name('login');
@@ -48,3 +50,4 @@ Route::get('profile', [UsersController::class,'profile']);
 Route::post('profile/update', [UsersController::class,'updateProfile']);
 Route::resource('users', UsersController::class);
 Route::get('dashboard', [Controller::class,'dashboard']);
+Route::resource('newsletters', NewslettersController::class);

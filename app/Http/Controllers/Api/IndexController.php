@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Newsletter;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -55,6 +56,33 @@ class IndexController extends Controller
                 "posts" => $postsQuery->get(),
                 "message" => "اطلاعات با موفقیت دریافت شد"
             ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                "message" => $exception->getMessage()
+            ], 401);
+        }
+    }
+
+    public function create_newsletter(Request $request)
+    {
+        try {
+            if($request->has('email') && filter_var($request->input('email'),FILTER_VALIDATE_EMAIL)){
+                $checkEmail = Newsletter::query()
+                    ->where('email', $request->input('email'))->first();
+
+                if(!$checkEmail){
+                    $newsletter = new Newsletter();
+                    $newsletter->email = $request->input('email');
+                    $newsletter->save();
+                }
+                return response()->json([
+                    "message" => "با موفقیت به خبرنامه ما وصل شدی. لذتشو ببر!"
+                ]);
+            }else{
+                return response()->json([
+                    "message" => "فرمت ایمیل قابل قبول نیست!"
+                ],410);
+            }
         } catch (\Exception $exception) {
             return response()->json([
                 "message" => $exception->getMessage()
