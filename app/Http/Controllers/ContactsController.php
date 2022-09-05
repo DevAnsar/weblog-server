@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class ContactsController extends Controller
 {
@@ -20,7 +21,8 @@ class ContactsController extends Controller
      */
     public function index(): JsonResponse
     {
-        $contacts = Contact::paginate(10);
+        $contacts = Contact::query()->where("parent_id",0)
+            ->withCount('answers')->paginate(10);
         return response()->json(['data' => $contacts]);
     }
     /**
@@ -32,23 +34,30 @@ class ContactsController extends Controller
     {
         //
     }
+
     /**
-     * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Contact $contact
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
      */
-    public function store(Request $request)
+    public function answer_to_contact(Contact $contact,Request $request)
     {
         if(!$request->user()->is_admin) {
             return response()->json(['message' => 'Unauthorize'], 500);
         }
         $this->validate($request, [
-            'title' => 'required'
+            'content' => 'required',
         ]);
-        $contact = new Contact();
-        $contact->title = $request->input('title');
-        $contact->save();
+
+        $contact->answers()->create([
+            'content' =>$request->input('content'),
+            'name'=> 'ادمین',
+            'email'=> "support@gmail.com"
+        ]);
+
+        $contact->answers = $contact->answers()->get();
         return response()->json(['data' => $contact, 'message' => 'Created successfully'], 201);
     }
 
@@ -60,7 +69,10 @@ class ContactsController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $contact = Contact::findOrFail($id);
+        $contact = Contact::query()->with('answers')->findOrFail($id);
+        if(!$contact->seen){
+            $contact->update(['seen'=>true]);
+        }
         return response()->json(['data' => $contact]);
     }
     /**

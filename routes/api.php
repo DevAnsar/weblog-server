@@ -53,3 +53,4 @@ Route::resource('users', UsersController::class);
 Route::get('dashboard', [Controller::class,'dashboard']);
 Route::resource('newsletters', NewslettersController::class);
 Route::resource('contacts', ContactsController::class);
+Route::post('contacts/{contact}/answer', [ContactsController::class,'answer_to_contact']);

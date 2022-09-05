@@ -21,4 +21,8 @@ class Contact extends Model
         'parent_id',
         'seen'
     ];
+
+    public function answers(){
+        return $this->hasMany(Contact::class,'parent_id');
+    }
 }
