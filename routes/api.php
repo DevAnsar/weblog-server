@@ -33,6 +33,7 @@ Route::prefix('v1')->group(function () {
     Route::get('categories/{slug}/posts', [ApiCategoryController::class,'get_category_posts']);
     Route::get('search', [ApiIndexController::class,'search']);
     Route::post('newsletter/addEmail', [ApiIndexController::class,'create_newsletter']);
+    Route::post('contact-us/sendMessage', [ApiIndexController::class,'create_contact_message']);
 });
 
 Route::post('login', [LoginController::class,'login'])->name('login');

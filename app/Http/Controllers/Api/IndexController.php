@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\Newsletter;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -83,6 +84,31 @@ class IndexController extends Controller
                     "message" => "فرمت ایمیل قابل قبول نیست!"
                 ],410);
             }
+        } catch (\Exception $exception) {
+            return response()->json([
+                "message" => $exception->getMessage()
+            ], 401);
+        }
+    }
+
+
+    public function create_contact_message(Request $request)
+    {
+        try {
+            $this->validate($request,[
+                'name'=> 'required|min:2',
+                'email'=> 'required|email',
+                'content'=> 'required|min:5'
+            ]);
+            Contact::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'content' => $request->input('content'),
+            ]);
+            return response()->json([
+                "message" => "پیام شما به ادمین ارسال شد"
+            ]);
+
         } catch (\Exception $exception) {
             return response()->json([
                 "message" => $exception->getMessage()
