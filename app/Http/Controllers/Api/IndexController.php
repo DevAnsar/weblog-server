@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Newsletter;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -108,6 +109,31 @@ class IndexController extends Controller
             return response()->json([
                 "message" => "پیام شما به ادمین ارسال شد"
             ]);
+
+        } catch (\Exception $exception) {
+            return response()->json([
+                "message" => $exception->getMessage()
+            ], 401);
+        }
+    }
+
+    public function get_user(Request $request,$username)
+    {
+        try {
+            $user = User::query()->where('username',$username)->first();
+
+            if($user){
+                return response()->json([
+                    "user" => $user,
+                    "posts" => $user->posts()->with('user')->get(),
+                    "message" => "",
+                ]);
+            }else{
+                return response()->json([
+                    "message" => "کاربر یافت نشد",
+                ],400);
+            }
+
 
         } catch (\Exception $exception) {
             return response()->json([

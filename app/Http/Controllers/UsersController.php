@@ -40,7 +40,8 @@ class UsersController extends Controller
             return response()->json(['message' => 'Unauthorize'], 500);
         }
         $this->validate($request, [
-            'name' => 'required|unique:users',
+            'name' => 'required',
+            'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'image' => 'nullable',
@@ -48,6 +49,7 @@ class UsersController extends Controller
         ]);
         $user = new User();
         $user->name = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->bio = $request->bio;
         $user->password = Hash::make($request->password);
@@ -91,11 +93,13 @@ class UsersController extends Controller
         }
         $user = User::findOrFail($id);
         $this->validate($request, [
-            'name' => 'required|unique:users,name,' . $user->id,
+            'name' => 'required',
+            'username' => 'required|unique:users,username,' . $user->id,
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => ($request->password != '' ? 'min:6' : ''),
         ]);
         $user->name = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->bio = $request->bio;
         if ($request->has('password') && !empty($request->password)) {
